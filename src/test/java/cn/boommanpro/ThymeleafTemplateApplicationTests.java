@@ -22,6 +22,11 @@ public class ThymeleafTemplateApplicationTests {
 
     }
 
+    @Test
+    public void usrDir(){
+        System.out.println(System.getProperty("user.dir"));
+    }
+
 
     @Test
     public void convert() {
@@ -34,7 +39,7 @@ public class ThymeleafTemplateApplicationTests {
     @Test
     public void mkdirs() {
 
-        String outPath = "D:\\thymeleaf-template\\generator\\";
+        String outPath = System.getProperty("user.dir")+"generator\\";
 
         String referencePackage = "cn.boommanpro";
 
@@ -60,17 +65,26 @@ public class ThymeleafTemplateApplicationTests {
 
 
 
+        //修改 core和 referencePackage即可
+
 
         String core = "Account";
+        String referencePackage = "cn.boommanpro.module.account"+".config";
+
+        boolean firstDb = true;
+
         String humpCore = StringUtils.upper2LowerHump(core);
         String upperCore = StringUtils.upper2UpperUnderLine(core);
         String midLineName = StringUtils.upper2LowerMidLine(core);
-        String referencePackage = "cn.boommanpro.module.account"+".config";
+
+
+
         context.setVariable("core", core);
         context.setVariable("humpCore", humpCore);
         context.setVariable("upperCore", upperCore);
         context.setVariable("midLineName", midLineName);
         context.setVariable("referencePackage", referencePackage);
+        context.setVariable("firstDb", firstDb);
 
         String filePath = outPath + referencePackage.replaceAll("\\.", "\\\\") + "\\";
 
@@ -121,7 +135,7 @@ public class ThymeleafTemplateApplicationTests {
         createFile(filePath, generatorDataSourceConfigurationFileName + suffix);
         createFile(filePath, generatorMybatisConfigurationFileName + suffix);
         createFile(filePath, generatorTxFileName + suffix);
-        createFile(outPath, application);
+        createFile(outPath, humpCore+"-"+application);
 
 
         //生成

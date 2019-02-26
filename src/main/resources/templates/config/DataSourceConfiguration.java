@@ -20,10 +20,9 @@ import javax.sql.DataSource;
 @Configuration
 public class [(${core})]DataSourceConfiguration {
 
-    //配置数据库
 
+    [# th:if="${firstDb}"]@Primary[/]
     @Bean(value = [(${core})]DataSourceConfig.DB_[(${upperCore})],destroyMethod = "")
-    @Primary
     @ConfigurationProperties([(${core})]DataSourceConfig.DB_[(${upperCore})]_PREFIX)
     public DataSource [(${humpCore})]DataSource() {
         DataSourceBuilder<HikariDataSource> factory = DataSourceBuilder.create().type(HikariDataSource.class);
@@ -32,10 +31,9 @@ public class [(${core})]DataSourceConfiguration {
         return gameDataSource;
     }
 
-    // TODO: 2018/9/21 正式线需要重新配置插件
-
+    [# th:if="${firstDb}"]@Primary[/]
     @Bean([(${core})]DataSourceConfig.DB_[(${upperCore})]_SQL_SESSION_FACTORY)
-    @Primary
+    @ConfigurationProperties(prefix = "mybatis")
     public SqlSessionFactoryBean [(${humpCore})]SqlSessionFactory(@Qualifier([(${core})]DataSourceConfig.DB_[(${upperCore})]) DataSource dataSource) {
         SqlSessionFactoryBean mybatisSqlSessionFactoryBean = new SqlSessionFactoryBean();
         mybatisSqlSessionFactoryBean.setDataSource(dataSource);
@@ -43,11 +41,8 @@ public class [(${core})]DataSourceConfiguration {
         return mybatisSqlSessionFactoryBean;
     }
 
-
-
-
+    [# th:if="${firstDb}"]@Primary[/]
     @Bean([(${core})]DataSourceConfig.TX_[(${upperCore})])
-    @Primary
     public DataSourceTransactionManager [(${humpCore})]Tx(@Qualifier([(${core})]DataSourceConfig.DB_[(${upperCore})]) DataSource dataSource) {
         DataSourceTransactionManager basicTx = new DataSourceTransactionManager();
         basicTx.setDataSource(dataSource);
