@@ -1,0 +1,11 @@
+
+[(${midLineName})]-server:
+  db-name: db_wormhole
+  url: 127.0.0.1
+db:
+  [(${midLineName})]:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jdbc-url: jdbc:mysql://${[(${midLineName})]-server.url}:3306/${[(${midLineName})]-server.db-name}}?useUnicode=true&characterEncoding=utf-8&useSSL=false&allowMultiQueries=true&serverTimezone=CTT
+    username: root
+    password: root
+    maximum-pool-size: 20
