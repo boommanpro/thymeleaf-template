@@ -9,7 +9,7 @@ public class [(${core})]DataSourceConfig {
 
     public static final String DB_[(${upperCore})] ="[(${midLineName})]";
 
-    public static final String DB_[(${upperCore})]_PREFIX =PREFIX+"."+ DB_ACCOUNT;
+    public static final String DB_[(${upperCore})]_PREFIX =PREFIX+"."+ String DB_[(${upperCore})];
 
     public static final String DB_[(${upperCore})]_SQL_SESSION_FACTORY ="[(${humpCore})]SqlSessionFactory";
 
